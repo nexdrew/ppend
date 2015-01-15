@@ -1,0 +1,41 @@
+{
+  "name": "ppend",
+  "version": "0.1.0",
+  "description": "Append to filenames. Supports append, prepend, or cut. CLI and Node/iojs module",
+  "main": "index.js",
+  "bin": {
+    "ppend": "cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nexdrew/ppend.git"
+  },
+  "keywords": [
+    "prepend",
+    "append",
+    "filename",
+    "rename",
+    "file",
+    "mv",
+    "cli"
+  ],
+  "author": {
+    "name": "Andrew Goode",
+    "email": "andrewbgoode@gmail.com",
+    "url": "http://abg.silvrback.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nexdrew/ppend/issues"
+  },
+  "homepage": "https://github.com/nexdrew/ppend",
+  "dependencies": {
+    "globby": "^1.1.0",
+    "mv": "^2.0.3",
+    "minimist": "^1.1.0",
+    "multiline": "^1.0.2"
+  }
+}
