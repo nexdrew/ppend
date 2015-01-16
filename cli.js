@@ -4,7 +4,7 @@
 var minimist = require('minimist');
 var multiline = require('multiline');
 
-var argv = minimist(process.argv.slice(2), { 'boolean': ['p', 'pre', 'prepend', 'c', 'cut', 'v', 'verbose'] });
+var argv = minimist(process.argv.slice(2), { 'boolean': ['p', 'pre', 'prepend', 'x', 'cut', 'v', 'verbose'] });
 
 if(argv._.length < 2) {
 	if(argv.V || argv['version']) {
@@ -18,9 +18,9 @@ Append text to filenames matching the given patterns.
 
 Options:
    -p, --pre      Prepend the text to the filenames instead of appending it.
-                  Mutually exlusive with the -c option.
+                  Mutually exlusive with the -x option.
 
-   -c, --cut      Remove the text from the filenames instead of appending it.
+   -x, --cut      Remove the text from the filenames instead of appending it.
                   Takes precedence over the -p option.
 
    -v, --verbose  Print pseudo mv commands to stdout.
@@ -34,7 +34,7 @@ var filePatterns = argv._.slice(1);
 
 //-- opts
 var pre = argv.p || argv.pre || argv['prepend'];
-var cut = argv.c || argv.cut;
+var cut = argv.x || argv.cut;
 var verbose = argv.v || argv.verbose;
 
 var ppend = require('./');
@@ -42,7 +42,7 @@ ppend(text, filePatterns, { cut: cut, pre: pre, verbose: verbose }, function(err
 	if(err) {
 		//console.log(JSON.stringify(errs, null, '\t'));
 		console.dir(errs);
-		process.exit(err['errno']);
+		process.exit(err['errno'] || 2);
 	}
 	//console.log('success');
 });

@@ -1,7 +1,7 @@
 {
   "name": "ppend",
-  "version": "0.1.0",
-  "description": "Append to filenames. Supports append, prepend, or cut. CLI and Node/iojs module",
+  "version": "0.2.0",
+  "description": "Rename files or dirs via append, prepend, or cut (remove) - CLI and async API",
   "main": "index.js",
   "bin": {
     "ppend": "cli.js"
