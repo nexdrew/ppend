@@ -70,6 +70,7 @@ Options:
 
    -x, --cut      Remove the text from the filenames instead of appending it.
                   Takes precedence over the -p option.
+                  Cuts the first occurrence only.
 
    -v, --verbose  Print pseudo mv commands to stdout.
 	*/}));
