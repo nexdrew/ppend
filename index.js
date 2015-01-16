@@ -18,6 +18,7 @@ function ppend(addThis, toThese, opts, cb) {
 	var isCut = opts && opts.cut; //-- remove from filename instead of append
 	var isPre = opts && opts.pre; //-- prepend instead of append
 	var isVerbose = opts && opts.verbose; //-- print pseudo commands
+	var isDryRun = opts && opts.dryRun; //-- ONLY print pseudo commands
 
 	//-- logic flow constructs
 	var pathsTotal = 0, pathsCount = 0;
@@ -35,17 +36,21 @@ function ppend(addThis, toThese, opts, cb) {
 			newName = isPre ? addThis+newName : newName+addThis;
 		}
 		var dest = path.join(path.dirname(target), newName+ext);
-		if(isVerbose) console.log('mv '+target+' '+dest);
-		mv(target, dest, function onMv(err) {
-			if(err) {
-				if(!errs) errs = [];
-				errs.push(err);
-			}
-			if(cb && (++pathsCount === pathsTotal)) {
-				if(errs) cb(errs[0], errs);
-				else cb();
-			}
-		});
+		if(isVerbose || isDryRun) console.log('mv '+target+' '+dest);
+		if(!isDryRun) {
+			mv(target, dest, function onMv(err) {
+				if(err) {
+					if(!errs) errs = [];
+					errs.push(err);
+				}
+				if(cb && (++pathsCount === pathsTotal)) {
+					if(errs) cb(errs[0], errs);
+					else cb();
+				}
+			});
+		} else {
+			if(cb && (++pathsCount === pathsTotal)) cb();
+		}
 	});
 }
 

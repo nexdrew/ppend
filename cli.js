@@ -11,17 +11,12 @@ function printVersion() {
 	process.exit(0);
 }
 
-var pre = 'pre', cut = 'cut', verbose = 'verbose';
-
 var flags = {
-	'p':  [pre],
-	'x':  [cut],
-	'v':  [verbose],
-	'pv': [pre, verbose],
-	'vp': [pre, verbose],
-	'xv': [cut, verbose],
-	'vx': [cut, verbose],
-	'V':  [printVersion]
+	'p':  'pre',
+	'x':  'cut',
+	'v':  'verbose',
+	'n':  'dryRun',
+	'V':  printVersion
 };
 
 var alias = {
@@ -29,7 +24,8 @@ var alias = {
 	'prepend': flags.p,
 	'cut':     flags.x,
 	'verbose': flags.v,
-	'version': flags.V
+	'version': flags.V,
+	'dry-run': flags.n
 };
 
 function handleNormal(arg) {
@@ -37,22 +33,41 @@ function handleNormal(arg) {
 	else filePatterns.push(arg);
 }
 
-function handleFlag(arg, slice, map) {
-	var argSlice = arg.slice(slice);
-	//console.log('handleFlag: "'+argSlice+'"');
-	if(map[argSlice]) {
-		map[argSlice].forEach(function(name) {
-			if(typeof name === 'function') name();
-			else opts[name] = true;
-		});
+function handleOpt(opt) {
+	if(typeof opt === 'function') opt();
+	else opts[opt] = true;
+}
+
+function handleFlag(arg) {
+	var argSlice = arg.slice(1);
+
+	//-- first check for non-flag char
+	for(var i=0; i<argSlice.length; i++) {
+		if(!flags[argSlice.charAt(i)]) {
+			handleNormal(arg);
+			return;
+		}
+	}
+
+	//-- otherwise resolve all flags
+	for(var j=0; j<argSlice.length; j++) {
+		handleOpt(flags[argSlice.charAt(j)]);
+	}
+}
+
+function handleAlias(arg) {
+	var argSlice = arg.slice(2);
+	var opt = alias[argSlice];
+	if(opt) {
+		handleOpt(opt);
 		return;
 	}
 	handleNormal(arg);
 }
 
 function handleArg(arg) {
-	if(arg.lastIndexOf('--', 0) === 0) handleFlag(arg, 2, alias);
-	else if(arg.lastIndexOf('-', 0) === 0) handleFlag(arg, 1, flags);
+	if(arg.lastIndexOf('--', 0) === 0) handleAlias(arg);
+	else if(arg.lastIndexOf('-', 0) === 0) handleFlag(arg);
 	else handleNormal(arg);
 }
 
@@ -73,6 +88,8 @@ Options:
                   Cuts the first occurrence only.
 
    -v, --verbose  Print pseudo mv commands to stdout.
+
+   -n, --dry-run  Print pseudo mv commands without renaming anything (no-op).
 	*/}));
 	process.exit(1);
 }
@@ -83,5 +100,5 @@ ppend(text, filePatterns, opts, function(err, errs) {
 		console.dir(errs);
 		process.exit(err['errno'] || 2);
 	}
-	//console.log('success');
+	// console.log('success');
 });

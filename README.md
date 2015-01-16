@@ -33,6 +33,10 @@ Remove from file names instead of append. Mutually exclusive with `-p`. If both 
 
 Print all attempted pseudo `mv` commands to stdout.
 
+`-n, --dry-run`
+
+Test the command by printing all attempted pseudo `mv` commands to stdout without actually renaming anything (no-op).
+
 `-V, --version`
 
 Print current version of `ppend` instead. If actual arguments are given, this option will be ignored.
@@ -153,6 +157,9 @@ var opts = {
 
 	verbose: true || false //Print pseudo commands to stdout
 
+    dryRun: true || false //Print pseudo commands without actually
+                          //renaming anything (no-op)
+
 };
 ```
 
@@ -181,7 +188,7 @@ var cb = function(err, errs) {
 
 ### 0.4.0
 
-- Add option for "dry run"
+- ~~Add option for "dry run"~~ **Done**
 
 ### 0.4.x
 
