@@ -51,7 +51,9 @@ $ ls -Alh *
 files:
 total 0
 -rw-r--r--  1 user  group     0B Jan 16 13:43 file4.sh
-$
+```
+
+```sh
 $ echo 'append "-OLD" to each file and dir name'
 $ ppend -OLD file* **/file*
 $
@@ -63,7 +65,9 @@ $ ls -Alh *
 files-OLD:
 total 0
 -rw-r--r--  1 user  group     0B Jan 16 13:43 file4-OLD.sh
-$
+```
+
+```sh
 $ echo 'prepend "new-" to dir name'
 $ ppend -p new- files-OLD/
 $
@@ -72,7 +76,9 @@ $ ls -Alh
 -rw-r--r--   1 user  group     0B Jan 16 13:43 file2-OLD.log
 -rw-r--r--   1 user  group     0B Jan 16 13:43 file3-OLD
 drwxr-xr-x   3 user  group   102B Jan 16 13:52 new-files-OLD
-$
+```
+
+```sh
 $ echo 'cut "-OLD" from file names'
 $ ppend -x -OLD file* **/file*
 $
@@ -84,7 +90,9 @@ $ ls -Alh *
 new-files-OLD:
 total 0
 -rw-r--r--  1 user  group     0B Jan 16 13:43 file4.sh
-$
+```
+
+```sh
 $ echo 'cut "new-" and "-OLD" from dir name'
 $ ppend -x new- new* && ppend -x -OLD *-OLD
 $
@@ -93,7 +101,9 @@ $ ls -Alh
 -rw-r--r--   1 user  group     0B Jan 16 13:43 file2.log
 -rw-r--r--   1 user  group     0B Jan 16 13:43 file3
 drwxr-xr-x   3 user  group   102B Jan 16 14:04 files
-$
+```
+
+```sh
 $ echo 'prepend "new-" to files with extensions'
 $ ppend -p new- file*.* **/file*.*
 $
