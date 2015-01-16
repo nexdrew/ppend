@@ -99,4 +99,4 @@ var cb = function(err, errs) {
 
 ## License
 
-MIT, &copy; 2015 Andrew Goode
+MIT, &copy; 2015 [Andrew Goode](https://www.npmjs.com/~abg)
