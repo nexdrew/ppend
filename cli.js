@@ -1,18 +1,66 @@
 #!/usr/bin/env node
 'use strict';
 
-var minimist = require('minimist');
-var multiline = require('multiline');
+var text;
+var filePatterns = [];
+var opts = {};
 
-var argv = minimist(process.argv.slice(2), { 'boolean': ['p', 'pre', 'prepend', 'x', 'cut', 'v', 'verbose'] });
+function printVersion() {
+	if(text && filePatterns.length > 0) return;
+	console.log(require('./package.json')['version']);
+	process.exit(0);
+}
 
-if(argv._.length < 2) {
-	if(argv.V || argv['version']) {
-		console.log(require('./package.json')['version']);
-		process.exit(0);
+var pre = 'pre', cut = 'cut', verbose = 'verbose';
+
+var flags = {
+	'p':  [pre],
+	'x':  [cut],
+	'v':  [verbose],
+	'pv': [pre, verbose],
+	'vp': [pre, verbose],
+	'xv': [cut, verbose],
+	'vx': [cut, verbose],
+	'V':  [printVersion]
+};
+
+var alias = {
+	'pre':     flags.p,
+	'prepend': flags.p,
+	'cut':     flags.x,
+	'verbose': flags.v,
+	'version': flags.V
+};
+
+function handleNormal(arg) {
+	if(!text) text = arg;
+	else filePatterns.push(arg);
+}
+
+function handleFlag(arg, slice, map) {
+	var argSlice = arg.slice(slice);
+	//console.log('handleFlag: "'+argSlice+'"');
+	if(map[argSlice]) {
+		map[argSlice].forEach(function(name) {
+			if(typeof name === 'function') name();
+			else opts[name] = true;
+		});
+		return;
 	}
-	console.log(multiline(function(){/*
-usage: ppend [options] text filePattern [...]
+	handleNormal(arg);
+}
+
+function handleArg(arg) {
+	if(arg.lastIndexOf('--', 0) === 0) handleFlag(arg, 2, alias);
+	else if(arg.lastIndexOf('-', 0) === 0) handleFlag(arg, 1, flags);
+	else handleNormal(arg);
+}
+
+process.argv.slice(2).forEach(handleArg);
+
+if(!(text && filePatterns.length > 0)) {
+	console.log(require('multiline')(function(){/*
+Usage: ppend [options] text filePattern [...]
 
 Append text to filenames matching the given patterns.
 
@@ -28,19 +76,9 @@ Options:
 	process.exit(1);
 }
 
-//-- args
-var text = argv._[0];
-var filePatterns = argv._.slice(1);
-
-//-- opts
-var pre = argv.p || argv.pre || argv['prepend'];
-var cut = argv.x || argv.cut;
-var verbose = argv.v || argv.verbose;
-
 var ppend = require('./');
-ppend(text, filePatterns, { cut: cut, pre: pre, verbose: verbose }, function(err, errs) {
+ppend(text, filePatterns, opts, function(err, errs) {
 	if(err) {
-		//console.log(JSON.stringify(errs, null, '\t'));
 		console.dir(errs);
 		process.exit(err['errno'] || 2);
 	}
