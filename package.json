@@ -1,6 +1,6 @@
 {
   "name": "ppend",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Rename files or dirs via append, prepend, or cut (remove) - CLI and async API",
   "main": "index.js",
   "bin": {
