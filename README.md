@@ -44,67 +44,67 @@ $ echo 'setup some arbitrary files'
 $ mkdir files
 $ touch file1.txt file2.log file3 files/file4.sh
 $ ls -Alh *
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file1.txt
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file2.log
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file3
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file1.txt
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file2.log
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file3
 
 files:
 total 0
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file4.sh
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file4.sh
 $
 $ echo 'append "-OLD" to each file and dir name'
 $ ppend -OLD file* **/file*
 $
 $ ls -Alh *
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file1-OLD.txt
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file2-OLD.log
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file3-OLD
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file1-OLD.txt
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file2-OLD.log
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file3-OLD
 
 files-OLD:
 total 0
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file4-OLD.sh
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file4-OLD.sh
 $
 $ echo 'prepend "new-" to dir name'
 $ ppend -p new- files-OLD/
 $
 $ ls -Alh
--rw-r--r--   1 abg  staff     0B Jan 16 13:43 file1-OLD.txt
--rw-r--r--   1 abg  staff     0B Jan 16 13:43 file2-OLD.log
--rw-r--r--   1 abg  staff     0B Jan 16 13:43 file3-OLD
-drwxr-xr-x   3 abg  staff   102B Jan 16 13:52 new-files-OLD
+-rw-r--r--   1 user  group     0B Jan 16 13:43 file1-OLD.txt
+-rw-r--r--   1 user  group     0B Jan 16 13:43 file2-OLD.log
+-rw-r--r--   1 user  group     0B Jan 16 13:43 file3-OLD
+drwxr-xr-x   3 user  group   102B Jan 16 13:52 new-files-OLD
 $
 $ echo 'cut "-OLD" from file names'
 $ ppend -x -OLD file* **/file*
 $
 $ ls -Alh *
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file1.txt
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file2.log
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file3
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file1.txt
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file2.log
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file3
 
 new-files-OLD:
 total 0
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file4.sh
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file4.sh
 $
 $ echo 'cut "new-" and "-OLD" from dir name'
 $ ppend -x new- new* && ppend -x -OLD *-OLD
 $
 $ ls -Alh
--rw-r--r--   1 abg  staff     0B Jan 16 13:43 file1.txt
--rw-r--r--   1 abg  staff     0B Jan 16 13:43 file2.log
--rw-r--r--   1 abg  staff     0B Jan 16 13:43 file3
-drwxr-xr-x   3 abg  staff   102B Jan 16 14:04 files
+-rw-r--r--   1 user  group     0B Jan 16 13:43 file1.txt
+-rw-r--r--   1 user  group     0B Jan 16 13:43 file2.log
+-rw-r--r--   1 user  group     0B Jan 16 13:43 file3
+drwxr-xr-x   3 user  group   102B Jan 16 14:04 files
 $
 $ echo 'prepend "new-" to files with extensions'
 $ ppend -p new- file*.* **/file*.*
 $
 $ ls -Alh *
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 file3
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 new-file1.txt
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 new-file2.log
+-rw-r--r--  1 user  group     0B Jan 16 13:43 file3
+-rw-r--r--  1 user  group     0B Jan 16 13:43 new-file1.txt
+-rw-r--r--  1 user  group     0B Jan 16 13:43 new-file2.log
 
 files:
 total 0
--rw-r--r--  1 abg  staff     0B Jan 16 13:43 new-file4.sh
+-rw-r--r--  1 user  group     0B Jan 16 13:43 new-file4.sh
 ```
 
 ## Module
