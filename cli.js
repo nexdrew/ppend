@@ -81,7 +81,7 @@ Append text to filenames matching the given patterns.
 
 Options:
    -p, --pre      Prepend the text to the filenames instead of appending it.
-                  Mutually exlusive with the -x option.
+                  Mutually exclusive with the -x option.
 
    -x, --cut      Remove the text from the filenames instead of appending it.
                   Takes precedence over the -p option.
