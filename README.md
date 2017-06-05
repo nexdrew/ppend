@@ -1,5 +1,7 @@
 # ppend
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/nexdrew/ppend.svg)](https://greenkeeper.io/)
+
 Simple CLI to rename files by appending, prepending, or cutting (removing) portions of filenames.
 
 A better alternative to calling `mv` several times or having to memorize some funky `find . -exec` syntax.
